@@ -1,0 +1,150 @@
+paths:
+  /api/users/:
+    get:
+      sumary: Get all users
+      tags:
+        - Users
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+  /api/users/{uid}:
+    get:
+      summary: Get a user by ID
+      tags: 
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: The ID of the user to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A user object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/User'
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+    put:
+      summary: Update a user by ID
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: The ID of the user to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fistName:
+                  type: string
+                  description: The first name of the user
+                  example: John
+                lastName:
+                  type: string
+                  description: The last name of the user
+                  example: Doe
+      responses:
+        "200":
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: string
+                    example: User updated
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+          
+
+          
+
+      
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier for the user
+        fistName:
+          type: string
+          description: The first name of the user
+        lastName:
+          type: string
+          description: The last name of the user
+        email:
+          type: string
+          description: The email address of the user
+        password:
+          type: string
+          description: The password of the user
+        role:
+          type: string
+          description: The role of the user (e.g., user, admin)
+        pets:
+          type: array
+          description: The pets owned by the user
+        _v:
+          type: integer
+          description: The version of the user document in the database
+      example:
+        _id: 67bcb79ca9340155067601fa
+        fistName: John
+        lastName: Doe
+        email: johndoe@gmail.com
+        password: password123
+        role: user
+        pets: ["67bcb79ca9340155067601fa"]
+        _v: 0
+
+      

@@ -6,6 +6,7 @@ import UserDTO from '../dto/User.dto.js';
 const register = async (req, res) => {
     try {
         const { first_name, last_name, email, password } = req.body;
+        console.log(req.body);
         if (!first_name || !last_name || !email || !password) return res.status(400).send({ status: "error", error: "Incomplete values" });
         const exists = await usersService.getUserByEmail(email);
         if (exists) return res.status(400).send({ status: "error", error: "User already exists" });
@@ -17,10 +18,9 @@ const register = async (req, res) => {
             password: hashedPassword
         }
         let result = await usersService.create(user);
-        console.log(result);
-        res.send({ status: "success", payload: result._id });
+        res.status(201).send({ status: "success", payload: result._id });
     } catch (error) {
-
+        res.status(500).send({ status: "error", error: "Internal server error" });
     }
 }
 

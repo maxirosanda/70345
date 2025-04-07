@@ -1,0 +1,57 @@
+paths:
+  /api/pets/:
+    get:
+      sumary: Get all pets
+      tags:
+        - Pets
+      responses:
+        "200":
+          description: A list of pets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pets'
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+
+
+
+components:
+  schemas:
+    Pets:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier for the pet
+        name:
+          type: string
+          description: The name of the pet
+        specie:
+          type: string
+          description: The species of the pet (e.g., dog, cat)
+        birthDate:
+          type: string
+          format: date
+          description: The birth date of the pet
+        _v:
+          type: integer
+          description: The version of the user document in the database
+      example:
+        _id: 1234567890abcdef12345678
+        name: Max
+        specie: dog
+        birthDate: 2020-01-01
+        _v: 0
+  

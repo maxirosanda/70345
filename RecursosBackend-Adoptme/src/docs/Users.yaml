@@ -100,7 +100,38 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
-          
+  /api/sessions/register:
+    post:
+      summary: Register a new user
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                    description: The status of the response
+                  payload:
+                    type: string
+                    example: 67bcb79ca9340155067601fa
+        "400":
+          description: Bad Request
+        "500":
+          description: Internal Server Error
+
 
           
 
@@ -116,10 +147,10 @@ components:
         _id:
           type: string
           description: The unique identifier for the user
-        fistName:
+        first_name:
           type: string
           description: The first name of the user
-        lastName:
+        last_name:
           type: string
           description: The last name of the user
         email:
@@ -139,12 +170,32 @@ components:
           description: The version of the user document in the database
       example:
         _id: 67bcb79ca9340155067601fa
-        fistName: John
-        lastName: Doe
+        first_name: John
+        last_name: Doe
         email: johndoe@gmail.com
         password: password123
         role: user
         pets: ["67bcb79ca9340155067601fa"]
         _v: 0
+    UserCreate:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The first name of the user
+        last_name:
+          type: string
+          description: The last name of the user
+        email:
+          type: string
+          description: The email address of the user
+        password:
+          type: string
+          description: The password of the user
+      example:
+        first_name: John
+        last_name: Doe
+        email: johndoe@gmail.com
+        password: password123
 
       

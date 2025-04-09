@@ -48,7 +48,7 @@ const createPetWithImage = async(req,res) =>{
     });
     console.log(pet);
     const result = await petsService.create(pet);
-    res.send({status:"success",payload:result})
+    res.status(201).send({status:"success",payload:result})
 }
 export default {
     getAllPets,

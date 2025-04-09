@@ -71,6 +71,18 @@ describe("Test Adoptme",()=>{
             expect(responseGet.ok).to.equal(false);
         })
 
+        it("Debe crear una mascota con imagen",async()=>{
+            const response = await requester.post("/api/pets/withimage")
+            .field("name","Max")
+            .field("specie","dog")
+            .field("birthDate","02/18/2020")
+            .attach("image","./tests/assets/dog.png");
+
+            expect(response.statusCode).to.equal(201);
+            expect(response.ok).to.equal(true);
+            expect(response.body.payload).to.have.property("_id");
+        })
+
 
     })
 })

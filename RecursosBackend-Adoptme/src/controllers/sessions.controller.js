@@ -40,7 +40,7 @@ const current = async(req,res) =>{
     const cookie = req.cookies['coderCookie']
     const user = jwt.verify(cookie,'tokenSecretJWT');
     if(user)
-        return res.send({status:"success",payload:user})
+        return res.status(200).send({status:"success",payload:user})
 }
 
 const unprotectedLogin  = async(req,res) =>{

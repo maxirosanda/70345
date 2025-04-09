@@ -34,6 +34,22 @@ describe("Users DAO", () => {
         expect(result.email).to.equal(user.email);
     })
 
+    it("El Dao debe poder actualizar un usuario correctamente", async function () {
+        const user = {
+            first_name: "Test",
+            last_name: "User",
+            email:"test2@gmail.com",
+            password:"test123", 
+        }
+        const userSaved = await this.users.save(user);
+        const updatedUser = {
+            first_name: "Updated"
+        }
+        const result = await this.users.update(userSaved._id,updatedUser);
+        expect(result).to.have.property("_id");
+        expect(result.first_name).to.equal(updatedUser.first_name);
+    })
+
 });
 
 

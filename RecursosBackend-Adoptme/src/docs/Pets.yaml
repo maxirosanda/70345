@@ -24,6 +24,44 @@ paths:
           description: Not Found
         "500":
           description: Internal Server Error
+    post:
+      sumary: Create a new pet
+      tags:
+        - Pets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Max
+                specie:
+                  type: string
+                  example: dog
+                birthDate:
+                  type: string
+                  format: date
+                  example: 02/18/2020
+      responses:
+        "201":
+          description: Pet created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: object
+                    $ref: '#/components/schemas/Pets'
+        "400":
+          description: Bad Request
+            
 
 
 
@@ -45,6 +83,13 @@ components:
           type: string
           format: date
           description: The birth date of the pet
+        adopted:
+          type: boolean
+          description: Whether the pet is adopted or not
+        image:
+          type: string
+          description: The image of the pet
+
         _v:
           type: integer
           description: The version of the user document in the database
@@ -53,5 +98,7 @@ components:
         name: Max
         specie: dog
         birthDate: 2020-01-01
+        adopted: false
+        image: https://example.com/max.jpg
         _v: 0
   

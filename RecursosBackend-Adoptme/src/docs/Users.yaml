@@ -53,9 +53,31 @@ paths:
                     $ref: '#/components/schemas/User'
         "404":
           description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: User not found
         "500":
           description: Internal Server Error
-    put:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  error:
+                    type: string
+                    example: Server Error
+    patch:
       summary: Update a user by ID
       tags:
         - Users

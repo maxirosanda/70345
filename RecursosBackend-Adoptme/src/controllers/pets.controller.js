@@ -31,6 +31,7 @@ const updatePet = async(req,res) =>{
 
 const deletePet = async(req,res)=> {
     const petId = req.params.pid;
+    if(petId =='undefined') return res.status(400).send({status:"error",error:"Pet ID is required"})
     const result = await petsService.delete(petId);
     res.send({status:"success",message:"pet deleted"});
 }

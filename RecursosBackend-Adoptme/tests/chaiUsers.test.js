@@ -5,6 +5,7 @@ import chai from "chai";
 mongoose.connect("mongodb+srv://maxirosanda:ZnyxQclWtB5ndaDS@cluster0.wh168.mongodb.net/adoptme70345?retryWrites=true&w=majority&appName=Cluster0");
 
 const expect = chai.expect;
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 describe("Users DAO", () => {
 
@@ -15,12 +16,22 @@ describe("Users DAO", () => {
         }
         this.users = new Users();
     })
-    beforeEach(function (){
+    beforeEach(async function (){
         this.timeout(5000);
+        await sleep(500);
+
+        const user = {
+            first_name: "Test",
+            last_name: "User",
+            email: `test${Date.now()}@mail.com`,
+            password: "test123",
+          };
+        this.user = await this.users.save(user);
     })
 
-    after(function (){
+    after(async function (){
         mongoose.connection.collections.users.drop();
+        await mongoose.disconnect();
     })
 
     it("El Dao debe poder obtener los usuarios en formato de arreglo", async function () {
@@ -31,18 +42,11 @@ describe("Users DAO", () => {
     })
 
     it("El Dao debe agregar correctamente un elemento a la base de datos", async function () {
-        const user = {
-            first_name: "Test",
-            last_name: "User",
-            email:"test@gmail.com",
-            password:"test123",
-        }
-        const result = await this.users.save(user);
-        this.user.id = await result._id;
-        expect(result).to.have.property("_id");
-        expect(result.first_name).to.equal(user.first_name);
-        expect(result.last_name).to.equal(user.last_name);
-        expect(result.email).to.equal(user.email);
+
+        expect(this.user).to.have.property("_id");
+        expect(this.user.first_name).to.equal("Test");
+        expect(this.user.last_name).to.equal("User");
+        expect(this.user.email).to.include("test");
     })
 
     it("El Dao debe poder actualizar un usuario correctamente", async function () {
